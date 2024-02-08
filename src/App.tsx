@@ -1,11 +1,9 @@
-import './App.css'
+import { AuthWrapper } from './components/containers';
 
 function App() {
   return (
     <>
-      <p className='font-bold text-3xl bg-slate-300'>
-        Your Home
-      </p>
+      <AuthWrapper></AuthWrapper>
     </>
   )
 }
