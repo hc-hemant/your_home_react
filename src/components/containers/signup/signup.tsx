@@ -2,6 +2,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { Button, Checkbox, LabelInput } from '../../widgets'
 import { signup } from '../../../apis/auth';
 import { ISignupRequestBody } from '../../../interfaces/auth.interface';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
     value: string;
@@ -20,6 +21,7 @@ interface ISignupForm {
 }
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [signupForm, setSignupForm] = useState<ISignupForm>({
         firstName: { value: '' },
         lastName: { value: '' },
@@ -39,8 +41,6 @@ const SignUp = () => {
             password: signupForm.password.value,
             phoneNumber: signupForm.phone.value,
         };
-
-        console.log("sign up request body", signupRequestBody);
 
         const user = await signup(signupRequestBody);
 
@@ -62,12 +62,16 @@ const SignUp = () => {
         });
     }
 
+    const signinClickHandler = () => {
+        navigate('/auth/signin');
+    }
+
     return (
-        <div className='p-12'>
-            <p className='text-4xl mb-10 text-primary-200 font-medium'>Register</p>
-            <form onSubmit={submitHandler}>
-                <div className='grid grid-cols-4 gap-6'>
-                    <div className='col-span-2'>
+        <div className='h-full flex p-12 flex-col justify-center items-center'>
+            <div className='w-8/12'>
+                <p className='text-4xl mb-10 text-primary-200 font-medium'>Register</p>
+                <form onSubmit={submitHandler}>
+                    <div className='mb-4'>
                         <LabelInput 
                             label='First Name' 
                             id='firstname' 
@@ -78,7 +82,7 @@ const SignUp = () => {
                             onChange={inputChangeHandler}
                         />
                     </div>
-                    <div className='col-span-2'>
+                    <div className='mb-4'>
                         <LabelInput 
                             label='Last Name (Optional)' 
                             id='lastname' 
@@ -89,7 +93,7 @@ const SignUp = () => {
                             onChange={inputChangeHandler}
                         />
                     </div>
-                    <div className='col-span-3'>
+                    <div className='mb-4'>
                         <LabelInput 
                             label='Email' 
                             id='email' 
@@ -100,7 +104,7 @@ const SignUp = () => {
                             onChange={inputChangeHandler}
                         />
                     </div>
-                    <div className='col-span-2'>
+                    <div className='mb-4'>
                         <LabelInput 
                             label='Phone Number' 
                             id='phone' 
@@ -111,7 +115,7 @@ const SignUp = () => {
                             onChange={inputChangeHandler}
                         />
                     </div>
-                    <div className='col-span-3'>
+                    <div className='mb-4'>
                         <LabelInput 
                             label='Password' 
                             id='password' 
@@ -122,7 +126,7 @@ const SignUp = () => {
                             onChange={inputChangeHandler}
                         />
                     </div>
-                    <div className='col-span-3'>
+                    <div className='mb-4'>
                         <LabelInput 
                             label='Confirm Password' 
                             id='confirmpassword' 
@@ -133,7 +137,7 @@ const SignUp = () => {
                             onChange={inputChangeHandler}
                         />
                     </div>
-                    <div className='col-span-4'>
+                    <div className='mb-4'>
                         <Checkbox 
                             label='I agree all the statements in Terms of service' 
                             id='termsofservice' 
@@ -141,11 +145,24 @@ const SignUp = () => {
                             value='termsofservice'
                         />
                     </div>
-                    <div className='col-span-4'>
+                    <div className='mb-4'>
                         <Button classes='w-28'>Sign up</Button>
                     </div>
-                </div>
-            </form>
+                    <div className='mb-4 text-center'>
+                        <span className='text-xl text-primary-200 font-bold'>OR</span>
+                    </div>
+                    <div className='mb-4 text-center'>
+                        <Button type='secondary'>
+                            Register with google
+                        </Button>
+                    </div>
+                    <div className='mb-4 text-center'>
+                        <span>Already have an account?
+                            <span className='text-primary-200 cursor-pointer ml-2' onClick={signinClickHandler}>Signin</span>
+                        </span>
+                    </div>
+                </form>
+            </div>
         </div>
         
     ) 

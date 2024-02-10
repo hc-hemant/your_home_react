@@ -1,5 +1,5 @@
+import { Outlet } from 'react-router-dom';
 import LogoWhite from '../../../assets/yhome-logo-white.png';
-import { SignUp } from '../index';
 
 const AuthWrapper = () => {
     return (
@@ -14,8 +14,8 @@ const AuthWrapper = () => {
                         </p>
                     </div>
                 </section>
-                <section className="flex-1 bg-white my-12 me-16 rounded-xl">
-                    <SignUp></SignUp>
+                <section className="flex-1 bg-white">
+                    <Outlet></Outlet>
                 </section>
             </section>
         </main>
