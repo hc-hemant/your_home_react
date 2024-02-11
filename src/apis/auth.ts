@@ -1,5 +1,5 @@
 import { BASE_URL } from '../constants/auth';
-import { ISigninRequestBody, ISignupRequestBody, IUserResponseModel } from '../interfaces/auth.interface';
+import { ISigninRequestBody, ISignupRequestBody, IUserResponseModel } from '../interfaces/auth';
 
 export const signup = async (signupData: ISignupRequestBody) : Promise<IUserResponseModel> => {
     try {
