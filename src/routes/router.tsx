@@ -10,6 +10,8 @@ import DashboardRoute from "./dashboard";
 import PlansRoute from "./plans";
 import BlogsRoute from "./blogs";
 import ContactUsRoute from "./contact-us";
+import AddPropertyRoute from "./add-property";
+import ViewPropertyRoute from "./view-property";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +38,16 @@ const router = createBrowserRouter([
               path: 'properties',
               id: 'properties',
               element: <PropertiesRoute />
+            },
+            {
+              path: 'properties/add',
+              id: 'addProperty',
+              element: <AddPropertyRoute />
+            },
+            {
+              path: 'properties/:id',
+              id: 'viewProperty',
+              element: <ViewPropertyRoute />
             },
             {
               path: 'dashboard',

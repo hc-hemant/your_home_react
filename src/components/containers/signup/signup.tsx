@@ -1,8 +1,10 @@
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { Button, Checkbox, LabelInput } from '../../widgets'
-import { signup } from '../../../apis/auth';
 import { ISignupRequestBody } from '../../../interfaces/auth';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
+import { signupAction } from '../../../store/actions/auth';
 
 interface IFormInput {
     value: string;
@@ -22,7 +24,9 @@ interface ISignupForm {
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const [signingUp, setSigningUp] = useState<boolean>();
+    const dispatch = useDispatch<any>();
+    const {loading}  = useSelector((state: RootState) => state.auth);
+
     const [signupForm, setSignupForm] = useState<ISignupForm>({
         firstName: { value: '' },
         lastName: { value: '' },
@@ -43,14 +47,13 @@ const SignUp = () => {
             phoneNumber: signupForm.phone.value,
         };
 
-        setSigningUp(true);
 
         try{
-            await signup(signupRequestBody);
-
-            navigate('/a');
+            const user = await dispatch(signupAction(signupRequestBody)).unwrap();
+            if (user && user.token) {
+                navigate('/a');
+            }
         } catch(err) {
-            setSigningUp(false);
             console.log("some error occured while signing up", err);
         }
     }
@@ -153,7 +156,7 @@ const SignUp = () => {
                         />
                     </div>
                     <div className='mb-4'>
-                        <Button classes='w-28' status={signingUp ? 'loading' : undefined}>Sign up</Button>
+                        <Button classes='w-28' status={loading ? 'loading' : undefined}>Sign up</Button>
                     </div>
                     <div className='mb-4 text-center'>
                         <span className='text-xl text-primary-400 font-bold'>OR</span>

@@ -1,7 +1,13 @@
-const PropertyCard = () => {
+
+interface IPropertyCardProps {
+    id: string;
+    onClick: (id: string) => void;
+}
+
+const PropertyCard = ({id, onClick }: IPropertyCardProps) => {
     return (
-        <section className="bg-white rounded-xl flex flex-col m-w-80 h-96 relative shadow-2xl">
-            <section className="h-4/6 bg-[url('/src/assets/bg_signup.jpg')] bg-cover rounded-t-xl"></section>
+        <section className="bg-white rounded-xl flex flex-col m-w-80 h-96 relative shadow-2xl cursor-pointer" onClick={() => onClick(id)}>
+            <section className="h-4/6 bg-[url('/src/assets/bg_signup.jpg')] bg-cover rounded-xl mx-3 mt-3"></section>
             <section className="flex-1 p-4 flex flex-col justify-between">
                 <section>
                     <p className="text-2xl font-medium">Apartment Name</p>

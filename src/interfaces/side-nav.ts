@@ -10,5 +10,6 @@ export interface INavlink {
 export interface ISideNavProps {
     logo: string;
     navLinks: Array<INavlink>;
-    onNavOptionSelected: (navLink: INavlink) => void
+    onNavOptionSelected: (navLink: INavlink) => void,
+    onBottomBtnClick: () => void
 }

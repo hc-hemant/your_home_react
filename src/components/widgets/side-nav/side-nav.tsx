@@ -3,7 +3,7 @@ import { Button } from '..';
 import { ISideNavProps } from '../../../interfaces/side-nav';
 
 
-const SideNav = ({ logo, navLinks, onNavOptionSelected}: ISideNavProps) => {
+const SideNav = ({ logo, navLinks, onNavOptionSelected, onBottomBtnClick}: ISideNavProps) => {
     const activeClass = 'bg-primary-600 text-primary-200 hover:bg-primary-600';
 
 
@@ -29,7 +29,7 @@ const SideNav = ({ logo, navLinks, onNavOptionSelected}: ISideNavProps) => {
                 </ul>
             </div>
             <div>
-                <Button type="light" classes='w-full h-20'>
+                <Button type="light" classes='w-full h-20' onClick={onBottomBtnClick}>
                     <div className='flex items-center'>
                         <span className='me-4'>Add Property</span>
                         <PlusCircleIcon className='h-8 w-8 text-primary-600' />

@@ -1,35 +1,50 @@
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler } from "react";
 import { Button, LabelInput } from "../../widgets";
 import { useNavigate } from "react-router-dom";
-import { signin } from "../../../apis/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { signinAction } from "../../../store/actions/auth";
 
-const SignIn = () => {
+
+type SigninProps  = {
+    onSuccess?: () => void
+}
+
+const SignIn = ({ onSuccess }: SigninProps) => {
     const navigate = useNavigate();
-    const [signingIn, setSigningIn] = useState<boolean>();
+    const dispatch = useDispatch<any>();
+
+    const { loading } = useSelector((state: RootState) => state.auth);
+
 
     const signinHandler : FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
-
-        setSigningIn(true);
 
         const form = new FormData(event.target as HTMLFormElement);
         const email = form.get('signinemail') as string;
         const password = form.get('signinpassword') as string;
 
         try {
-            await signin({
-                email,
-                password
-            });
-            navigate('/a')
+            const user = await dispatch(signinAction({
+                    email,
+                    password
+                })
+            ).unwrap();
+
+            if (user && user.token) {
+                onSuccess ? onSuccess() : navigate('/a');
+            }
         } catch(err) {
-            setSigningIn(false);
             console.log("some error occured", err);
         }
     }
 
     const signupClickHandler = () => {
         navigate('/auth/signup');
+    }
+
+    const signinWithGoogleHandler = () => {
+        console.log("signin with google coming soon...");
     }
 
     return (
@@ -56,7 +71,7 @@ const SignIn = () => {
                         />
                     </div>
                     <div className="mb-6">
-                        <Button classes='w-36' status={signingIn ? 'loading' : undefined}>
+                        <Button classes='w-36' status={loading ? 'loading' : undefined}>
                             Login
                         </Button>
                     </div>
@@ -64,7 +79,7 @@ const SignIn = () => {
                         <span className='text-xl text-primary-400 font-bold'>OR</span>
                     </div>
                     <div className='mb-6 text-center'>
-                        <Button type='secondary'>
+                        <Button type='secondary' onClick={signinWithGoogleHandler}>
                             Signin with google
                         </Button>
                     </div>

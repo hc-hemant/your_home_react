@@ -9,3 +9,5 @@ export { default as ContactUs} from './contact-us/contact-us';
 export { default as Dashboard} from './dashboard/dashboard';
 export { default as Breadcrumb} from './breadcrumb/breadcrumb';
 export { default as Header} from './header/header';
+export { default as AddProperty} from './add-property/add-property';
+export { default as ViewProperty} from './view-property/view-property';
