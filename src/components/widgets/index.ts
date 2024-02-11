@@ -6,3 +6,4 @@ export { default as Spinner}  from './spinner/spinner';
 export { default as SideNav}  from './side-nav/side-nav';
 export { default as Badge}  from './badge/badge';
 export { default as PropertyCard}  from './property-card/property-card';
+export { default as Modal}  from './modal/modal';

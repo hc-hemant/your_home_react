@@ -11,7 +11,7 @@ interface IButton {
     status?: 'loading';
 }
 
-const Button = ({type= 'primary', classes, status, children}: IButton) => {
+const Button = ({type= 'primary', classes, status, children, onClick}: IButton) => {
     const primaryBtnClass = 'bg-primary-600 text-white rounded font-medium';
     const secondaryBtnClass = 'border border-primary-600 text-primary-600 bg-white rounded';
     const lightBtnClass = 'bg-primary-200 text-black rounded font-medium';
@@ -22,8 +22,12 @@ const Button = ({type= 'primary', classes, status, children}: IButton) => {
         light: lightBtnClass
     }
 
+    const onClickHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
+        if(onClick) onClick(event);
+    }
+
     return (
-        <button className={`px-4 h-10 ${btnClassMap[type]} ${classes} `}>
+        <button type={type === 'primary'? 'submit': 'button'} className={`px-4 h-10 ${btnClassMap[type]} ${classes} `} onClick={onClickHandler}>
             <div className="flex justify-center items-center">
                 {status && <Spinner size="xs" type={type} />}
                 <span className={status && 'ml-2'}>{children}</span>
