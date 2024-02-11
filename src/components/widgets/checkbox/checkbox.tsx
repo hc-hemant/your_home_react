@@ -6,9 +6,9 @@ interface IInputCheckbox extends InputHTMLAttributes<HTMLInputElement>{
 
 const Checkbox = ({id, label, ...restProps}: IInputCheckbox) => {
     return (
-        <div>
+        <div className="flex items-center">
             <input {...restProps} type="checkbox" id={id}/>
-            <label htmlFor={id}>{label}</label>
+            <label className="ml-2" htmlFor={id}>{label}</label>
         </div>
     )
 }
