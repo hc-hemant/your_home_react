@@ -1,6 +1,8 @@
+import { Properties } from "../components/containers";
+
 const PropertiesRoute = () => {
     return (
-        <p>Properties route</p>
+        <Properties />
     )
 }
 

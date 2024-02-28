@@ -8,9 +8,10 @@ export default {
     colors: {
       transparent: 'transparent',
       primary: {
-        200: '#88BDBC',
-        500: '#254E58',
-        800: '#112D32'
+        200: '#F3E8FD',
+        400: '#D6B8F9',
+        600: '#734CB8',
+        800: '#5B31AC'
       },
       black: '#17252A',
       white: '#fff',

@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { Button, Checkbox, LabelInput } from '../../widgets'
 import { signup } from '../../../apis/auth';
-import { ISignupRequestBody } from '../../../interfaces/auth.interface';
+import { ISignupRequestBody } from '../../../interfaces/auth';
 import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
@@ -22,6 +22,7 @@ interface ISignupForm {
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const [signingUp, setSigningUp] = useState<boolean>();
     const [signupForm, setSignupForm] = useState<ISignupForm>({
         firstName: { value: '' },
         lastName: { value: '' },
@@ -42,10 +43,16 @@ const SignUp = () => {
             phoneNumber: signupForm.phone.value,
         };
 
-        const user = await signup(signupRequestBody);
+        setSigningUp(true);
 
-        console.log('user instance', user);
+        try{
+            await signup(signupRequestBody);
 
+            navigate('/a');
+        } catch(err) {
+            setSigningUp(false);
+            console.log("some error occured while signing up", err);
+        }
     }
 
     const inputChangeHandler : ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -69,7 +76,7 @@ const SignUp = () => {
     return (
         <div className='h-full flex p-12 flex-col justify-center items-center'>
             <div className='w-8/12'>
-                <p className='text-4xl mb-10 text-primary-200 font-medium'>Register</p>
+                <p className='text-4xl mb-10 text-primary-400 font-medium'>Register</p>
                 <form onSubmit={submitHandler}>
                     <div className='mb-4'>
                         <LabelInput 
@@ -146,10 +153,10 @@ const SignUp = () => {
                         />
                     </div>
                     <div className='mb-4'>
-                        <Button classes='w-28'>Sign up</Button>
+                        <Button classes='w-28' status={signingUp ? 'loading' : undefined}>Sign up</Button>
                     </div>
                     <div className='mb-4 text-center'>
-                        <span className='text-xl text-primary-200 font-bold'>OR</span>
+                        <span className='text-xl text-primary-400 font-bold'>OR</span>
                     </div>
                     <div className='mb-4 text-center'>
                         <Button type='secondary'>
@@ -158,7 +165,7 @@ const SignUp = () => {
                     </div>
                     <div className='mb-4 text-center'>
                         <span>Already have an account?
-                            <span className='text-primary-200 cursor-pointer ml-2' onClick={signinClickHandler}>Signin</span>
+                            <span className='text-primary-400 cursor-pointer ml-2' onClick={signinClickHandler}>Signin</span>
                         </span>
                     </div>
                 </form>

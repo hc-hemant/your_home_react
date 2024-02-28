@@ -1,26 +1,33 @@
 import { MouseEventHandler, ReactNode } from "react"
+import { Spinner } from "..";
 
-type ButtonType = 'primary' | 'secondary';
+type ButtonType = 'primary' | 'secondary'| 'light';
 
 interface IButton {
     onClick?: MouseEventHandler<HTMLButtonElement>;
     type?: ButtonType;
     children: ReactNode;
     classes?: string;
+    status?: 'loading';
 }
 
-const Button = ({type= 'primary', classes, children}: IButton) => {
-    const primaryBtnClass = 'h-10 bg-primary-200 text-white rounded font-medium';
-    const secondaryBtnClass = 'h-10 border border-primary-200 text-primary-200 bg-white rounded';
+const Button = ({type= 'primary', classes, status, children}: IButton) => {
+    const primaryBtnClass = 'bg-primary-600 text-white rounded font-medium';
+    const secondaryBtnClass = 'border border-primary-600 text-primary-600 bg-white rounded';
+    const lightBtnClass = 'bg-primary-200 text-black rounded font-medium';
 
-    const btnClassMap : {[key: string]: string}= {
+    const btnClassMap : {[key: string]: string} = {
         primary: primaryBtnClass,
-        secondary: secondaryBtnClass
+        secondary: secondaryBtnClass,
+        light: lightBtnClass
     }
 
     return (
-        <button className={`px-4 ${btnClassMap[type]} ${classes} `}>
-            {children}
+        <button className={`px-4 h-10 ${btnClassMap[type]} ${classes} `}>
+            <div className="flex justify-center items-center">
+                {status && <Spinner size="xs" type={type} />}
+                <span className={status && 'ml-2'}>{children}</span>
+            </div>
         </button>
     )
 }
